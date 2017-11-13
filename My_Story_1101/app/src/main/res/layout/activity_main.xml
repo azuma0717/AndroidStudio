@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff9ff1"
+    tools:context="com.yukigmail.my_story_1101.MainActivity">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="236dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="My Stories"
+        android:textColor="#5affd8"
+        android:textSize="35dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView4"
+        android:layout_below="@+id/textView8"
+        android:layout_marginTop="29dp"
+        android:text="Name"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="47dp"
+        tools:layout_editor_absoluteY="93dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="46dp"
+        android:text="Phone"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="148dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="32dp"
+        android:text="City"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="60dp"
+        tools:layout_editor_absoluteY="218dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="51dp"
+        android:text="Email"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="285dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="21dp"
+        android:layout_alignEnd="@+id/textView2"
+        android:layout_below="@+id/editText10"
+        android:layout_marginTop="34dp"
+        android:text="Favorite song"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="359dp" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button"
+        android:layout_alignStart="@+id/textView5"
+        android:layout_marginBottom="41dp"
+        android:text="Favorite Movie"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="430dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/editText12"
+        android:layout_alignParentBottom="true"
+        android:text="OK"
+        android:background="#d103fae2"
+        tools:layout_editor_absoluteX="257dp"
+        tools:layout_editor_absoluteY="471dp" />
+
+    <EditText
+        android:id="@+id/editText7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView"
+        android:layout_toEndOf="@+id/textView7"
+        android:background="#aac6f8fa"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editText8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignStart="@+id/editText7"
+        android:background="#aac6f8fa"
+        android:ems="10"
+        android:hint="000000000"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/editText9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/editText8"
+        android:layout_alignTop="@+id/textView3"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:background="#aac6f8fa"
+        android:hint="Mexico" />
+
+    <EditText
+        android:id="@+id/editText10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/editText9"
+        android:layout_alignTop="@+id/textView4"
+        android:ems="10"
+        android:background="#aac6f8fa"
+        android:hint="example.com"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/editText11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/editText12"
+        android:layout_alignTop="@+id/textView5"
+        android:background="#aac6f8fa"
+        android:ems="10"
+        android:hint="Tamma Tamma Again"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editText12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView7"
+        android:layout_marginStart="12dp"
+        android:layout_toEndOf="@+id/textView7"
+        android:background="#aac6f8fa"
+        android:ems="10"
+        android:hint="Three Idiots"
+        android:inputType="textPersonName" />
+
+</RelativeLayout>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#36e1dddd"
+    tools:context="com.yukigmail.my_cal_1102.MainActivity">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="300dp"
+        android:layout_height="54dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView14"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="23dp"
+        android:text="My Cal (9 and 8)"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        android:textColor="#1a1dab"
+        android:fontFamily="sans-serif-black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.035" />
+
+    <Button
+        android:id="@+id/rem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/div"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:onClick="clicks5"
+        android:background="#c480ffd9"
+        android:textSize="15dp"
+        android:textColor="#8f8b8b"
+        android:text="Rem"
+        />
+
+    <Button
+        android:id="@+id/div"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/rem"
+        android:layout_below="@+id/mul"
+        android:layout_marginTop="12dp"
+        android:onClick="clicks4"
+        android:background="#c498ff91"
+        android:textSize="15dp"
+        android:textColor="#8f8b8b"
+        android:text="Div" />
+
+    <Button
+        android:id="@+id/mul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/div"
+        android:layout_alignTop="@+id/sub"
+        android:layout_marginTop="69dp"
+        android:onClick="clicks3"
+        android:background="#c4fdff98"
+        android:textSize="15dp"
+        android:textColor="#8f8b8b"
+        android:text="Mul" />
+
+    <Button
+        android:id="@+id/sub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/mul"
+        android:layout_below="@+id/add"
+        android:layout_marginTop="18dp"
+        android:onClick="clicks2"
+        android:background="#c4fdbe8e"
+        android:textSize="15dp"
+        android:textColor="#8f8b8b"
+        android:text="Sub" />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/div"
+        android:layout_below="@+id/textView6"
+        android:layout_marginTop="40dp"
+        android:onClick="clicks1"
+        android:background="#c4ffa59b"
+        android:textSize="15dp"
+        android:textColor="#8f8b8b"
+        android:text="Add" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/add"
+        android:layout_alignBottom="@+id/add"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="35dp"
+        android:textSize="20dp"
+        android:textColor="#e3ef103d"
+        android:textStyle="italic"
+        android:text="add rslt" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/sub"
+        android:layout_alignBottom="@+id/sub"
+        android:layout_alignEnd="@+id/textView6"
+        android:layout_marginEnd="15dp"
+        android:textSize="20dp"
+        android:textColor="#e3ef7110"
+        android:textStyle="italic"
+        android:text="sub rslt" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/mul"
+        android:layout_alignStart="@+id/textView14"
+        android:textSize="20dp"
+        android:textColor="#d6e4ef10"
+        android:textStyle="italic"
+        android:text="mul rslt" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView15"
+        android:layout_alignTop="@+id/div"
+        android:layout_marginTop="14dp"
+        android:textSize="20dp"
+        android:textColor="#e314ef10"
+        android:textStyle="italic"
+        android:text="div rslt" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/rem"
+        android:layout_alignStart="@+id/textView16"
+        android:layout_marginBottom="12dp"
+        android:textSize="20dp"
+        android:textColor="#e310efeb"
+        android:textStyle="italic"
+        android:text="rem rslt" />
+
+
+</RelativeLayout>
