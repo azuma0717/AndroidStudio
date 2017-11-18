@@ -9,30 +9,40 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity  {
 
 
     ImageView iv;
-    GridView gridView;
-    Image_Adaptar im;
+    GridView gv;
+    Image_Adaptar IM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gridView = (GridView) findViewById(R.id.yukig);
-         im = new Image_Adaptar(this);
-        gridView.setAdapter(new Image_Adaptar(this));
-        gridView.setOnItemClickListener(this);
+        iv = (ImageView)findViewById(R.id.ImageView);
+        gv = (GridView) findViewById(R.id.yukig);
+
+/////////////////// Use Image_Adaptar class//////////
+
+        ////// make a IM object/////////////////////
+
+        IM = new Image_Adaptar(this);
+
+
+        gv.setAdapter(IM);
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View v, int position,long id ) {
+                iv.setImageResource(IM.mThumbIds[position]);
+            }
+
+        });
 
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(getApplicationContext(),""+im.getItem(i),Toast.LENGTH_LONG).show();
-        iv.setImageResource((Integer) im.getItem(i));
-    }
 }
 
