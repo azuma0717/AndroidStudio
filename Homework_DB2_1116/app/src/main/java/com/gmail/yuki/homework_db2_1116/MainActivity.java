@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt2:
 
                 Intent intent = new Intent(getApplicationContext(),Show_DB3.class);
+
                 startActivity(intent);
 
 
