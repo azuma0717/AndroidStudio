@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gmail.yuki.test_boot3.MainActivity">
+
+
+
+
+    <com.beardedhen.androidbootstrap.AwesomeTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bootstrapBrand="success"
+        app:fontAwesomeIcon="fa_android"
+        />
+
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="aaaaaaaaaaaaaaaaaa"
+        android:id="@+id/button3"
+        app:fontAwesomeIcon="fa_android"
+        app:bootstrapBrand="success"
+        android:layout_gravity="center_horizontal"
+        />
+
+
+
+
+
+
+
+</LinearLayout>

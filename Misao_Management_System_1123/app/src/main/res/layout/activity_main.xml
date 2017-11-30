@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#70fde1e1"
+    android:orientation="vertical"
+    tools:context="com.gmail.yuki.misao_management_system_1123.MainActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/misao"
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Management System"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#ebe7348b"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bt1"
+        android:layout_width="150dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:text="Insert\nmember"
+
+        android:textColor="#d7666363"
+        android:textSize="25dp"
+        />
+
+    <Button
+        android:id="@+id/bt2"
+        android:layout_width="150dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="Show\nAll"
+        android:background="#75ff8400"
+        android:textColor="#d7666363"
+        android:textSize="25dp"
+        />
+
+    <Button
+        android:id="@+id/bt3"
+        android:layout_width="150dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="Show\nfrom ID"
+        android:background="#75ff0400"
+        android:textColor="#d7666363"
+        android:textSize="25dp"
+        />
+
+</LinearLayout>

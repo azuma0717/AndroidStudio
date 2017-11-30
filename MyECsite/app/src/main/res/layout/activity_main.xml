@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android-bootstrap="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.gmail.yuki.myecsite.MainActivity">
 
-    <TextView
+
+
+    <com.beardedhen.androidbootstrap.AwesomeTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="10dp"
+        app:bootstrapBrand="success"
+        app:fontAwesomeIcon="fa_android"
+        android:textSize="50dp"
+        />
+
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="アイコンボタン。角丸にも出来ます。"
+        android-bootstrap:bb_icon_left="fa-smile-o"
+        android-bootstrap:bb_type="default"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="65dp" />
+
+
+    <!--<com.beardedhen.androidbootstrap.BootstrapProgressBar-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:animated="true"-->
+        <!--app:bootstrapBrand="warning"-->
+        <!--app:progress="78"-->
+        <!--app:striped="true"-->
+        <!--/>-->
+
 
 </android.support.constraint.ConstraintLayout>
