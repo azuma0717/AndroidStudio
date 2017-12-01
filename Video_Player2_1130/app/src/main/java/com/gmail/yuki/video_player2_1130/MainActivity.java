@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     VideoView v;
     Button bt1;
     int b = 1;
+    Uri video_uri;
 
 //    private static final int CAMERA_CAPTURE = 200;
     public static final int CAM_REQUEST = 100;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         File video_file  = getfilepath();
-        Uri video_uri = Uri.fromFile(video_file);
+        video_uri= Uri.fromFile(video_file);
 
 
         intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30);
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private File getfilepath(){
 
-        File folder = new File("sdcard/video_app");
+        File folder = new File(String.valueOf(Environment.getExternalStoragePublicDirectory("myvedio")));
 
         if(!folder.exists()){
 
@@ -61,10 +62,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-        File video_file = new File(folder,b+"camera_video.mp4");
+        File video_file = new File(folder+File.separator+"video.mp4");
 
         return video_file;
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("file",video_uri);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        video_uri = savedInstanceState.getParcelable("file");
     }
 
     @Override
@@ -75,10 +88,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        String path = "sdcard/video_app/"+b+"camera_video.mp4";
 //        Uri uri = Uri.parse(path);
 //
-//        v.setVisibility(View.VISIBLE);
-//        v.setVideoURI(uri);
+        v.setVisibility(View.VISIBLE);
+        v.setVideoURI(video_uri);
 //        v.requestFocus();
-//        v.start();
+        v.start();
 //        b++;
 
     }

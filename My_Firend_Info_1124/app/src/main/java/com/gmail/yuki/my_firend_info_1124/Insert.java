@@ -168,13 +168,6 @@ public class Insert extends Activity implements View.OnClickListener, AdapterVie
 
             case R.id.camera:
 
-                Cursor rslt2 = databese_helper.showall();
-
-                rslt2.moveToLast();
-
-
-                    b = rslt2.getString(rslt2.getColumnIndex("_id"));
-
 
                 Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File file = getfile();
