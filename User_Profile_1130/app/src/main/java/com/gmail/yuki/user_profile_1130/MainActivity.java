@@ -36,7 +36,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
     ImageView iv1;
     TextView tv1;
     String city1;
-    String b, bbb, x,path;
+    String b, bbb, x, path, dd;
     static final int Camera_Request = 1;
     String city[] = {"select city", "Tokyo", "Osaka", "Delhi", "Gurgaon", "Chandigarh", "Agra"};
     Database_Helper databese_helper;
@@ -67,9 +67,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
         bt4.setOnClickListener(this);
 
         databese_helper = new Database_Helper(MainActivity.this);
+        dd = getIntent().getStringExtra("idnumber");
+//        Toast.makeText(getApplicationContext(), dd, Toast.LENGTH_SHORT).show();
+
 
     }
-
 
     ///////////////////// on click Listener///////////////////////
 
@@ -77,6 +79,24 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
     public void onClick(View v) {
 
         switch (v.getId()) {
+
+
+            case R.id.ok:
+
+                String name  = ed1.getText().toString();
+                String phone = ed2.getText().toString();
+                String email = ed3.getText().toString();
+                String city  = city1;
+                String dob   = x;
+                String photo = path;
+
+                String method = "insert";
+                databese_helper.execute(method,name,phone,email,city,dob,photo);
+
+                break;
+
+
+
 
             case R.id.checkdob:
 
@@ -102,29 +122,24 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
 
                 break;
 
+
             case R.id.camera:
 
-                String method = "yukicheck";
+                if (dd == null) {
 
-                databese_helper.execute(method);
+                    b = "1";
+                } else {
 
-                String dd = getIntent().getStringExtra("idnumber");
-                Toast.makeText(getApplicationContext(),dd,Toast.LENGTH_SHORT).show();
+                    b = dd;
 
-//                if (rslt2 == null) {
-//
-                    b = databese_helper.show;
-//                } else {
+                }
 
-//                    b = rslt2.getString(rslt2.getColumnIndex("_id"));
-//
-//                }
+                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File file = getfile();
+                camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                startActivityForResult(camera_intent, Camera_Request);
 
-
-//                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                File file = getfile();
-//                camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-//                startActivityForResult(camera_intent, Camera_Request);
+                break;
 
         }
     }
@@ -133,7 +148,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
 
     private File getfile() {
 
-        String c ="";
+        String c = "";
         int bb = Integer.parseInt(b) + 1;
         bbb = String.valueOf(bb);
 
@@ -157,7 +172,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Adap
         Bitmap bmp1 = BitmapFactory.decodeFile(path);
         Bitmap rebmp1 = Bitmap.createScaledBitmap(bmp1, 200, 200, false);
 
-        iv1.setImageBitmap(rebmp1);                //ビットマップをImageViewにセット
+        iv1.setImageBitmap(rebmp1);  //ビットマップをImageViewにセット
 
 
     }
