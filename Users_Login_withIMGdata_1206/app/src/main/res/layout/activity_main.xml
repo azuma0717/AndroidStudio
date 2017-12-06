@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bangkok"
+    tools:context="com.gmail.yuki.users_login_withimgdata_1206.MainActivity">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:text="WELCOME TO \n MY LOGIN SYSTEM \n WITH PICTURES"
+        android:textColor="#b3040631"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="WELCOME TO \n MY LOGIN SYSTEM \n WITH PICTURES"
+        android:textColor="#edffffff"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -64,7 +64,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 File file = getfile();
                 uri = Uri.fromFile(file);
                 camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
+                ////startActivityForResult と返ってくるリクエストコードを設定。ここでは、Camera_Request = 1
+                //リザルトの時にif文とかでリクエストコードとリザルトコードを照合させたりして、使い分ける。
+                //返ってきたときに受け取りは、onActivityResult で受け取る
                 startActivityForResult(camera_intent, Camera_Request);
+
+                //startActivity(camera_intent);を使うと、リクエストが返ってこないので、
+                //ただカメラが起動して、写真とるだけになる。撮った写真をどうするかどうかは、Resultを返してもらう必要あり。
 
                 break;
 
@@ -89,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private File getfile() {
 
 
+        //////パプブリックなフォルダを作成する。DIRECTORY_PICTURES、はPICTURESフォルダを意味する。その配下にHelloフォルダができる。
         File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Hello");
 
         if (!folder.exists()) {
@@ -98,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+        //////現在の時間を取得する。フォーマットも決める。Locale.getDefaultでOSの言語を設定する。最後にフォーマットを指定。
+        //////イメージファイルの名前の付け方をここで決める。File.separatorは、区切りの「/」を表す。
         String time = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         File image_file = new File(folder + File.separator + "IMG_" + time + ".jpg");
         img_name = "IMG_" + time + ".jpg";
@@ -106,17 +116,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+    //startActivityForResultの結果の受け取り
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
 
         iv1.setImageBitmap(bitmap);
 
+
+        ///Bitmapオブジェクトをbyte配列に変換する。
+        //まずは、オブジェクトを生成する
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        //stream には、圧縮したビットストリームを流し込む先を指定
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] imgArr = stream.toByteArray();
+        //サーバーに画像のデータを送る場合にBASE64エンコードしてStringとして送る
         encodedString = Base64.encodeToString(imgArr, 0);
-
 
     }
 

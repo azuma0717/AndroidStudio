@@ -57,7 +57,7 @@ public class Database_Helper extends AsyncTask<String, Void, String> {
 
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
                 String data = URLEncoder.encode("img_n","UTF-8")+"="+URLEncoder.encode(img_name,"UTF-8")+"&"+
-                        URLEncoder.encode("encoded_string","UTF-8")+"="+URLEncoder.encode(encodedstring,"UTF-8");
+                              URLEncoder.encode("encoded_string","UTF-8")+"="+URLEncoder.encode(encodedstring,"UTF-8");
 
                 bufferedWriter.write(data);
 
