@@ -86,6 +86,13 @@ public class Register extends Activity implements SensorEventListener, View.OnCl
                 databese_helper.execute(method,name,email,pass,img_name,encodeString);
 
 
+                ed1.setText("");
+                ed2.setText("");
+                ed3.setText("");
+                iv1.setImageBitmap(null);
+
+
+
 
 
         }
@@ -116,6 +123,13 @@ public class Register extends Activity implements SensorEventListener, View.OnCl
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        sm.unregisterListener(this,sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+    }
+
     ///////////////////////////////////////////////////////////
 
     ////////////////get a pictures from storage////////////////
