@@ -19,6 +19,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         bt1 = findViewById(R.id.send);
         bt1.setOnClickListener(this);
+
+        ////sessionは、putextraをしなくても、変数を送ることができる。
+        ///今回の場合は、setter,getterを織り交ぜながらやっている。
+
+        //Sessionクラスを作って、setter,getterにセット
         Session session = new Session(this,"users");
         session.setName("name","yuki");
 
