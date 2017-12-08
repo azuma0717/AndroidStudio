@@ -36,9 +36,9 @@ public class Database_Helper extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute() {
-        dialog = new ProgressDialog(context);
-        dialog.setMessage("loading....");
-        dialog.show();
+//        dialog = new ProgressDialog(context);
+//        dialog.setMessage("loading....");
+//        dialog.show();
     }
 
 

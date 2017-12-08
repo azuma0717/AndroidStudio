@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".Insert" />
         <activity android:name=".ShowAll" />
-        <activity android:name=".ShowID"></activity>
+        <activity android:name=".ShowID" />
     </application>
 
 </manifest>

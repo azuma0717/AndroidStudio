@@ -159,7 +159,7 @@ public class Register extends Activity implements SensorEventListener, View.OnCl
             File f = new File(image_path);
             img_name = f.getName();
 
- //////////////Encoding to Base64/////////////////////////////////////////////
+            //////////////Encoding to Base64/////////////////////////////////////////////
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -168,7 +168,6 @@ public class Register extends Activity implements SensorEventListener, View.OnCl
 
         }
 
-        ////////////////////////////////////////////////////////////////
-
     }
+    ////////////////////////////////////////////////////////////////
 }
