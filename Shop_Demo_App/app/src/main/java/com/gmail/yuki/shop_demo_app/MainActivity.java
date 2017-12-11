@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String arr[] = new String[5];
     Database_Helper database_helper;
 
-    /////決め打ちで配列の大きさを決めてるので、、、本当は動的に大きさを決めたいところ。
     String[] products = null;
 
     @Override
@@ -86,29 +85,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         productAdapter = new ProductAdapter(MainActivity.this,R.layout.home_layout,list);
         listView.setAdapter(productAdapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                ProductData productData = (ProductData) listView.getItemAtPosition(i);
-//
-//
-//                String id = productData.getId();
-//                String name = productData.getImg_name();
-//                String email = productData.getEmail();
-//                String pass = productData.getPass();
-//                String path = productData.getImg_path();
-//
-//
-//                arr = new String[]{id,name, email, pass, path};
-//
-//                Toast.makeText(getApplicationContext(),productData.getCname(), Toast.LENGTH_SHORT).show();
-//
-//                Intent intent = new Intent(getApplicationContext(),User_Profile.class);
-//                intent.putExtra("userinfo", arr);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ProductData productData = (ProductData) listView.getItemAtPosition(i);
+
+
+//                Toast.makeText(getApplicationContext(),""+i, Toast.LENGTH_SHORT).show();
+
+                database_helper = new Database_Helper(MainActivity.this);
+
+                String productId = String.valueOf(i+1);
+                String method = "productshow";
+
+                database_helper.execute(method,productId);
+
+
+
+//                Intent intent = new Intent(getApplicationContext(),ProductShow.class);
+//                intent.putExtra("productid", pid);
 //                startActivity(intent);
-//
-//            }
-//        });
+
+            }
+        });
 
 
     }

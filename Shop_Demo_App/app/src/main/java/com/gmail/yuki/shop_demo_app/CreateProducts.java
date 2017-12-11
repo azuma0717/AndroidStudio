@@ -34,6 +34,7 @@ public class CreateProducts extends Activity implements AdapterView.OnItemSelect
     Uri uri;
     String img_name;
     String encodeString;
+    Database_Helper database_helper;
 
 
 
@@ -91,10 +92,15 @@ public class CreateProducts extends Activity implements AdapterView.OnItemSelect
 
             case R.id.submit:
 
+                String method = "CreateProduct";
+                String cid = String.valueOf(x);
                 String name = ed1.getText().toString();
                 String price = ed2.getText().toString();
-                String cid = String.valueOf(x);
                 String img = encodeString;
+
+                database_helper = new Database_Helper(CreateProducts.this);
+                database_helper.execute(method,cid,name,price,img);
+
 
                 break;
 
