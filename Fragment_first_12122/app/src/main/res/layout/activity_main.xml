@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.gmail.yuki.fragment_first_1212.MainActivity">
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/titlesFragment"
+        android:name="com.gmail.yuki.fragment_first_1212.TitleFragment">
+
+    </fragment>
+
+</LinearLayout>
+
+<!--fragmentタグを使う場合は、静的でメニューなど変わらない場合に、用いる。ルールとしてname属性を作って、
+パッケージ名、フラグメントのクラス名をつける必要がある。ないとエラーになる。-->

@@ -46,8 +46,8 @@ public class ProductShow extends AppCompatActivity {
                 name = jo.getString("name");
                 price = jo.getString("price");
                 img = jo.getString("img");
-//                img = "http://10.0.1.42:8888/Androidims/"+img;
-                img = "http://192.171.144.40:8888/Androidims/"+img;
+                img = "http://10.0.1.42:8888/Androidims/"+img;
+//                img = "http://192.171.144.40:8888/Androidims/"+img;
                 ProductData productData = new ProductData();
                 productData.setName(name);
                 productData.setPrice(price);

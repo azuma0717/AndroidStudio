@@ -46,8 +46,8 @@ public class Database_Helper extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
 
 
-//        String reg_url = "http://10.0.1.42:8888/Androidims/ShopDemoApp_Add.php";
-        String reg_url = "http://192.171.144.40:8888/Androidims/ShopDemoApp_Add.php";
+        String reg_url = "http://10.0.1.42:8888/Androidims/ShopDemoApp_Add.php";
+//        String reg_url = "http://192.171.144.40:8888/Androidims/ShopDemoApp_Add.php";
         String method = params[0];
 
         if (method.equals("add")) {
@@ -85,8 +85,8 @@ public class Database_Helper extends AsyncTask<String, Void, String> {
 
         } else if (method.equals("category")) {
 
-//            reg_url = "http://10.0.1.42:8888/Androidims/ShopDemoApp_GetCategory.php";
-            reg_url = "http://192.171.144.40:8888/Androidims/ShopDemoApp_GetCategory.php";
+            reg_url = "http://10.0.1.42:8888/Androidims/ShopDemoApp_GetCategory.php";
+//            reg_url = "http://192.171.144.40:8888/Androidims/ShopDemoApp_GetCategory.php";
 
             try {
                 URL url = new URL(reg_url);
@@ -123,8 +123,8 @@ public class Database_Helper extends AsyncTask<String, Void, String> {
 
         } else if (method.equals("CreateProduct")) {
 
-//            reg_url = "http://10.0.1.42:8888/Androidims/ShopDemoApp_Product.php";
-            reg_url = "http://192.171.144.40:8888/Androidims/ShopDemoApp_Product.php";
+            reg_url = "http://10.0.1.42:8888/Androidims/ShopDemoApp_Product.php";
+//            reg_url = "http://192.171.144.40:8888/Androidims/ShopDemoApp_Product.php";
 
             String cid = params[1];
             String name = params[2];
@@ -165,8 +165,8 @@ public class Database_Helper extends AsyncTask<String, Void, String> {
 
         } else if (method.equals("productshow")) {
 
-//            reg_url = "http://10.0.1.42:8888/Androidims/ShopDemoApp_ProductShow.php";
-            reg_url = "http://192.171.144.40:8888/Androidims/ShopDemoApp_ProductShow.php";
+            reg_url = "http://10.0.1.42:8888/Androidims/ShopDemoApp_ProductShow.php";
+//            reg_url = "http://192.171.144.40:8888/Androidims/ShopDemoApp_ProductShow.php";
 
             String pid = params[1];
 

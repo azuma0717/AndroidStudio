@@ -16,6 +16,24 @@
         android:text="CPU"
         android:textSize="30dp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-20dp"
+        android:layout_marginLeft="30dp"
+        android:text="Score"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-5dp"
+        android:layout_marginLeft="70dp"
+        android:text="0"
+        android:textStyle="bold"
+        android:textSize="20dp" />
+
     <ImageView
         android:id="@+id/cpu"
         android:layout_width="80dp"
@@ -31,6 +49,8 @@
         android:layout_marginTop="30dp"
         android:gravity="center"
         android:text="Ready?"
+        android:textColor="#413f3f"
+        android:textStyle="bold"
         android:textSize="30dp" />
 
     <ImageView

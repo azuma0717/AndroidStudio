@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.gmail.yuki.fragment_first_1212.SubActivity">
+
+    <FrameLayout
+        android:id="@+id/detailFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+    </FrameLayout>
+
+</LinearLayout>
+
+<!--動的にフラグメントを表示させる場合は、Framelayoutを使う。name属性はいらない。
+FrameLayotの中身は、まずTextViewを作って、その中に配列（News.Details）を突っ込んで、FrameLayoutに表示させる-->
