@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="com.gmail.yuki.firebase_first_1215.MainActivity">
+    tools:context="com.gmail.yuki.firebase_second_userinfo_1217.MainActivity">
 
 
     <LinearLayout

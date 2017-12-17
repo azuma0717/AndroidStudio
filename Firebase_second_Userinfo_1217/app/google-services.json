@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "434938057354",
+    "firebase_url": "https://swipecards-6ac5f.firebaseio.com",
+    "project_id": "swipecards-6ac5f",
+    "storage_bucket": "swipecards-6ac5f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434938057354:android:712fabf18fda0761",
+        "android_client_info": {
+          "package_name": "com.gmail.yuki.firebase_first_1215"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "434938057354-7au8gppl0pvcs2ilv011j62o961tlc83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAjVCmXreuuwiRGe49mayNPwJAO9ARnNc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434938057354:android:a464a6343a388a63",
+        "android_client_info": {
+          "package_name": "com.gmail.yuki.firebase_second_userinfo_1217"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "434938057354-7au8gppl0pvcs2ilv011j62o961tlc83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAjVCmXreuuwiRGe49mayNPwJAO9ARnNc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
