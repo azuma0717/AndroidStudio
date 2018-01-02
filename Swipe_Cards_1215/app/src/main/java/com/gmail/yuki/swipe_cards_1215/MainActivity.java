@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class MainActivity extends Activity {
 
     //↓自作アダプター
     private arrayAdapter arrayAdapter;
-    Button bt1;
+    Button bt1, bt2;
     FirebaseAuth mAuth;
 
     private String userSex;
@@ -45,8 +46,6 @@ public class MainActivity extends Activity {
     List<cards> rowItems;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +55,7 @@ public class MainActivity extends Activity {
         usersDb = FirebaseDatabase.getInstance().getReference().child("Users");
 
         bt1 = findViewById(R.id.logout);
+        bt2 = findViewById(R.id.setting);
         mAuth = FirebaseAuth.getInstance();
         currentUID = mAuth.getCurrentUser().getUid();
 
@@ -66,13 +66,27 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
 
                 mAuth.signOut();
-                Intent intent = new Intent(getApplicationContext(),Login.class);
+                Intent intent = new Intent(getApplicationContext(), Login.class);
                 startActivity(intent);
                 finish();
                 return;
 
             }
         });
+
+        //setting botton///////
+        bt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+                intent.putExtra("userSex",userSex);
+                startActivity(intent);
+                return;
+
+            }
+        });
+
 
         ///////////////
 
@@ -84,10 +98,10 @@ public class MainActivity extends Activity {
         rowItems = new ArrayList<cards>();
 
         //引数に、このアクティビティ、itemレイアウト、rouItemsの配列を渡している。(arrayAdapterは、自作のアダプター)
-        arrayAdapter = new arrayAdapter(this, R.layout.item,rowItems);
+        arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems);
 
         //idと紐付け。
-        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView)findViewById(R.id.frame);
+        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
 
         flingContainer.setAdapter(arrayAdapter);
@@ -107,22 +121,29 @@ public class MainActivity extends Activity {
                 //If you want to use it just cast it (String) dataObject
                 //↓デフォルトのトーストの文が、最新バージョンじゃないので自分で直す。
 
-                cards obj = (cards)dataObject;
+                //カードを左にスワイプした時、dataObjectをcardsオブジェクトに格納して、getUserID()にアクセス。
+                //userIdをゲットしたら、データベースに接続する。
+
+                //↓ここちょっと不明っすわ。cardsクラスにアクセスして、userIdを取って来てるらしいが、dataObjectを変換するあたりの動きがわからん。
+                cards obj = (cards) dataObject;
                 String userId = obj.getUserID();
                 usersDb.child(oppositeUserSex).child(userId).child("connections").child("nope").child(currentUID).setValue(true);
 
-                Toast.makeText(getApplicationContext(),"Like!!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Dislike!!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
 
 
-                cards obj = (cards)dataObject;
+                cards obj = (cards) dataObject;
                 String userId = obj.getUserID();
                 usersDb.child(oppositeUserSex).child(userId).child("connections").child("yep").child(currentUID).setValue(true);
 
-                Toast.makeText(getApplicationContext(),"Dislike!!",Toast.LENGTH_SHORT).show();
+                //カードに出ているユーザーのIDを引き渡す。
+                isConnectionMatch(userId);
+
+                Toast.makeText(getApplicationContext(), "Like!!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -139,16 +160,48 @@ public class MainActivity extends Activity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                Toast.makeText(getApplicationContext(),"Clicked!!!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Clicked!!!", Toast.LENGTH_SHORT).show();
 
             }
         });
 
     }
 
+    ////////右にスワイプしたときに、下のファンクションが発動される///////////////////////////////////////////////
+    ////////マッチしてもしなくても発動。checkは下のif文でやってる///////////////////////////////////////////////
+
+    private void isConnectionMatch(final String userId) {
+
+        //カードに出ているユーザーが、ログインしているユーザーのことをlikeしていたら、「yep」の配下に存在する。
+        DatabaseReference currentUserConectionsDb = usersDb.child(userSex).child(currentUID).child("connections").child("yep").child(userId);
+        currentUserConectionsDb.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    //dataSnapshot.getKey()でカードに出ている人のユーザーIDを取得。その配下にconnectionsとmatchesを作成する。
+                    usersDb.child(oppositeUserSex).child(dataSnapshot.getKey()).child("connections").child("matches").child(currentUID).setValue(true);
+
+                    //こっちは、自分のところにマッチした人を格納する。dataSnapshot.getKey()はカードに出ている人のユーザーID
+                    usersDb.child(userSex).child(currentUID).child("connections").child("matches").child(dataSnapshot.getKey()).setValue(true);
+
+                    Toast.makeText(getApplicationContext(), "New Conections", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     //////////////////////////////////////////////////////////////////////////////////
 
-    public void checkUserSex(){
+    public void checkUserSex() {
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -157,7 +210,7 @@ public class MainActivity extends Activity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                if(dataSnapshot.getKey().equals(user.getUid())){
+                if (dataSnapshot.getKey().equals(user.getUid())) {
 
                     userSex = "male";
                     oppositeUserSex = "female";
@@ -169,12 +222,15 @@ public class MainActivity extends Activity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
             }
+
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -185,7 +241,7 @@ public class MainActivity extends Activity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                if(dataSnapshot.getKey().equals(user.getUid())){
+                if (dataSnapshot.getKey().equals(user.getUid())) {
 
                     userSex = "female";
                     oppositeUserSex = "male";
@@ -197,12 +253,15 @@ public class MainActivity extends Activity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
             }
+
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -210,17 +269,19 @@ public class MainActivity extends Activity {
 
     }
 
-    public void getOppositeSexUsers(){
+    public void getOppositeSexUsers() {
 
+        //ログインしたユーザーの性別の逆を取得する。
         DatabaseReference oppositeSexDb = FirebaseDatabase.getInstance().getReference().child("Users").child(oppositeUserSex);
         oppositeSexDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                if(dataSnapshot.exists() && !dataSnapshot.child("connections").child("yep").hasChild(currentUID) && !dataSnapshot.child("connections").child("nope").hasChild(currentUID)){
+                //dataが存在した場合かつ、すでにyepかnopeで、振り分けられてない場合に発動。
+                if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("yep").hasChild(currentUID) && !dataSnapshot.child("connections").child("nope").hasChild(currentUID)) {
 
                     //ここで、DBから情報を引っ張ってきてる
-                    cards item = new cards(dataSnapshot.getKey() , dataSnapshot.child("name").getValue().toString());
+                    cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString());
 
                     rowItems.add(item);
                     arrayAdapter.notifyDataSetChanged();
@@ -230,12 +291,15 @@ public class MainActivity extends Activity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
             }
+
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
