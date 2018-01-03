@@ -27,18 +27,18 @@ public class arrayAdapter extends ArrayAdapter<cards> {
     Context context;
 
     //ArrayAdapterをextendsすると、こいつをつくる決まりなのかな？
-    public arrayAdapter(Context context, int resourceId, List<cards> items){
-        super(context,resourceId,items);
+    public arrayAdapter(Context context, int resourceId, List<cards> items) {
+        super(context, resourceId, items);
 
     }
 
     //getViewは絶対必要。
-    public View getView(int position,  View convertView,  ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
 
         cards card_item = getItem(position);
 
 
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
         }
 
@@ -48,13 +48,21 @@ public class arrayAdapter extends ArrayAdapter<cards> {
 
         name.setText(card_item.getName());
 
-//        ↓はダミーで使ってた。
-//        image.setImageResource(R.mipmap.ic_launcher);
 
         //Glide使ってFirebaseストレージにある画像をダウンロードURLにアクセスしてimageで表示。ダウンロードURLはcardsクラスから取得する。
-        Glide.with(getContext()).load(card_item.getProfileImageUrl()).into(image);
 
+        switch (card_item.getProfileImageUrl()) {
 
+            case "default":
+
+                Glide.with(convertView.getContext()).load(R.mipmap.ic_launcher).into(image);
+                break;
+
+            default:
+                Glide.clear(image);
+                Glide.with(convertView.getContext()).load(card_item.getProfileImageUrl()).into(image);
+                break;
+        }
 
 
         //arrayAdapterを呼び出したら、リターンでconvetViewが返る。
@@ -62,7 +70,6 @@ public class arrayAdapter extends ArrayAdapter<cards> {
 
 
     }
-
 
 
 }

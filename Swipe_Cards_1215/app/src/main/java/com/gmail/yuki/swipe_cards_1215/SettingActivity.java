@@ -121,10 +121,29 @@ public class SettingActivity extends AppCompatActivity {
 
                     }
 
+
+                    //画像読み込みのキャンセル。ここでは初期化みたいなイメージかな。
+                    Glide.clear(mProfileImage);
+
                     //Glideを使って、FirebaseのストレージからダウンロードURLをゲットして、表示させる。
+
+                    //"profileImageUrl"がnullじゃなかったら発動。基レジスターの段階で必ずインサートされるから通るはず。
                     if (map.get("profileImageUrl") != null) {
                         profileImageUrl = map.get("profileImageUrl").toString();
-                        Glide.with(getApplication()).load(profileImageUrl).into(mProfileImage);
+
+                        switch (profileImageUrl) {
+
+                            case "default":
+
+                                Glide.with(getApplication()).load(R.mipmap.ic_launcher).into(mProfileImage);
+                                break;
+
+                            default:
+                                Glide.with(getApplication()).load(profileImageUrl).into(mProfileImage);
+                                break;
+
+                        }
+
 
                     }
 

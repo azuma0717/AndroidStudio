@@ -280,8 +280,18 @@ public class MainActivity extends Activity {
                 //dataが存在した場合かつ、すでにyepかnopeで、振り分けられてない場合に発動。
                 if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("yep").hasChild(currentUID) && !dataSnapshot.child("connections").child("nope").hasChild(currentUID)) {
 
-                    //ここで、DBから情報を引っ張ってきてる.profileImageUrlが設定されてない場合は、エラーになる。ユーザID,名前、プロフィール画像のURLを引き渡してる
-                    cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(),dataSnapshot.child("profileImageUrl").getValue().toString());
+                    //基本はデフォルトを入れとく
+                    String profileImageUrl = "default";
+
+                    //もし、プロフィールイメージURLがデフォルトじゃなかったら、画像のURLを取得して格納する。
+                    if(!dataSnapshot.child("profileImageUrl").getValue().equals("default")){
+
+                        profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
+
+                    }
+
+                    //ここで、DBから情報を引っ張ってきてる.ユーザID,名前、プロフィール画像のURLを引き渡してる
+                    cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(),profileImageUrl);
 
                     rowItems.add(item);
                     arrayAdapter.notifyDataSetChanged();

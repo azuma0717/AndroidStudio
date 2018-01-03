@@ -20,6 +20,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
     EditText ed1,ed2,ed3;
@@ -140,8 +143,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 if(task.isSuccessful()){
 
                     String userId = mAuth.getCurrentUser().getUid();
-                    DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId).child("name");
-                    currentUserDb.setValue(name);
+                    DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId);
+
+                    //Mapを使って、名前とプロファイルイメージのDBのコラムをアップデートする。アップデートの時はput.
+                    Map userInfo = new HashMap<>();
+                    userInfo.put("name",name);
+                    userInfo.put("profileImageUrl","default");
+                    currentUserDb.updateChildren(userInfo);
 
                     Toast.makeText(getApplicationContext(), "Register Successfully", Toast.LENGTH_SHORT).show();
 
