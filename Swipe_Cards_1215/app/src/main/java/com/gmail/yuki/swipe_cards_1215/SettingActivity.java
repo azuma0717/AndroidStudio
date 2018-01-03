@@ -50,6 +50,7 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        //ログインしているユーザーの性別を一緒にIntentしてくる
         String userSex = getIntent().getExtras().getString("userSex");
 
         mNameField = findViewById(R.id.name);
@@ -62,6 +63,7 @@ public class SettingActivity extends AppCompatActivity {
         userId = mAuth.getCurrentUser().getUid();
         mCustomerDatabese = FirebaseDatabase.getInstance().getReference().child("Users").child(userSex).child(userId);
 
+        //このページに飛んで来た時に、既にデータがDBに格納されていたら、デフォルトで表示しておく
         getUserInfo();
 
         mProfileImage.setOnClickListener(new View.OnClickListener() {
@@ -93,41 +95,40 @@ public class SettingActivity extends AppCompatActivity {
 
     }
 
+    //このページに飛んで来た時に、既にデータがDBに格納されていたら、デフォルトで表示しておく
     private void getUserInfo() {
 
+        //ログインしているユーザー情報を取得する
         mCustomerDatabese.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                //ユーザーが存在しているかつ、その配下にユーザーデータが１個でもある場合
                 if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
 
+                    //ユーザーIDにぶらさがっている情報をMapを使って取得する。
                     Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
 
                     if (map.get("name") != null) {
-
                         name = map.get("name").toString();
                         mNameField.setText(name);
 
                     }
 
                     if (map.get("phone") != null) {
-
                         phone = map.get("phone").toString();
                         mPhoneField.setText(phone);
 
                     }
 
+                    //Glideを使って、FirebaseのストレージからダウンロードURLをゲットして、表示させる。
                     if (map.get("profileImageUrl") != null) {
-
                         profileImageUrl = map.get("profileImageUrl").toString();
                         Glide.with(getApplication()).load(profileImageUrl).into(mProfileImage);
 
-
                     }
 
-
                 }
-
             }
 
             @Override
@@ -142,6 +143,8 @@ public class SettingActivity extends AppCompatActivity {
         name = mNameField.getText().toString();
         phone = mPhoneField.getText().toString();
 
+        //ログインしているユーザー情報をアップデートする、アップデートするときはHashMapでいく。
+        //アップデートは「put」
         Map userInfo = new HashMap();
         userInfo.put("name", name);
         userInfo.put("phone", phone);
@@ -149,15 +152,20 @@ public class SettingActivity extends AppCompatActivity {
 
         if (resultUri != null) {
 
+            //ファイルのアップロード、書き方はほぼこれでOK///
+
+            //ファイルパスの書き方は自由。今回は"profileImages"の配下にuserIdをつけてる
             StorageReference filepath = FirebaseStorage.getInstance().getReference().child("profileImages").child(userId);
             Bitmap bitmap = null;
 
+            //bitmapの書き方では、try,catchが必要らしい。
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getApplication().getContentResolver(), resultUri);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
+            //firebaseのファイルアップロードではこれがベーシック
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
             byte[] data = baos.toByteArray();
@@ -175,6 +183,7 @@ public class SettingActivity extends AppCompatActivity {
 
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
+                    //ダウンロードURLをゲットしたら、DBに格納する
                     Map userInfo = new HashMap();
                     userInfo.put("profileImageUrl", downloadUrl.toString());
                     mCustomerDatabese.updateChildren(userInfo);
@@ -185,15 +194,13 @@ public class SettingActivity extends AppCompatActivity {
                 }
             });
 
-
         } else {
-
             finish();
-
         }
 
     }
 
+    //写真のフォルダにアクセスした時のリザルトを記載。Uriはここでゲットして格納する。さらにImageもここで表示させる。
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -204,8 +211,6 @@ public class SettingActivity extends AppCompatActivity {
             resultUri = imageUri;
             mProfileImage.setImageURI(resultUri);
 
-
         }
-
     }
 }

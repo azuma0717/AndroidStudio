@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 /**
@@ -45,7 +47,14 @@ public class arrayAdapter extends ArrayAdapter<cards> {
 
 
         name.setText(card_item.getName());
-        image.setImageResource(R.mipmap.ic_launcher);
+
+//        ↓はダミーで使ってた。
+//        image.setImageResource(R.mipmap.ic_launcher);
+
+        //Glide使ってFirebaseストレージにある画像をダウンロードURLにアクセスしてimageで表示。ダウンロードURLはcardsクラスから取得する。
+        Glide.with(getContext()).load(card_item.getProfileImageUrl()).into(image);
+
+
 
 
         //arrayAdapterを呼び出したら、リターンでconvetViewが返る。
