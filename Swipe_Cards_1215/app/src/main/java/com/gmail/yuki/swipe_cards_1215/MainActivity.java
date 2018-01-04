@@ -2,15 +2,16 @@ package com.gmail.yuki.swipe_cards_1215;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.gmail.yuki.swipe_cards_1215.Cards.arrayAdapter;
+import com.gmail.yuki.swipe_cards_1215.Cards.cards;
+import com.gmail.yuki.swipe_cards_1215.Matches.MatchesActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -29,8 +30,8 @@ public class MainActivity extends Activity {
     private cards cards_data[];
 
     //↓自作アダプター
-    private arrayAdapter arrayAdapter;
-    Button bt1, bt2;
+    private com.gmail.yuki.swipe_cards_1215.Cards.arrayAdapter arrayAdapter;
+    Button bt1, bt2,bt3;
     FirebaseAuth mAuth;
 
     private String userSex;
@@ -56,6 +57,7 @@ public class MainActivity extends Activity {
 
         bt1 = findViewById(R.id.logout);
         bt2 = findViewById(R.id.setting);
+        bt3 = findViewById(R.id.matches);
         mAuth = FirebaseAuth.getInstance();
         currentUID = mAuth.getCurrentUser().getUid();
 
@@ -80,7 +82,18 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
-                intent.putExtra("userSex",userSex);
+                startActivity(intent);
+                return;
+
+            }
+        });
+
+        //matches botton///////
+        bt3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), MatchesActivity.class);
                 startActivity(intent);
                 return;
 
@@ -127,7 +140,7 @@ public class MainActivity extends Activity {
                 //↓ここちょっと不明っすわ。cardsクラスにアクセスして、userIdを取って来てるらしいが、dataObjectを変換するあたりの動きがわからん。
                 cards obj = (cards) dataObject;
                 String userId = obj.getUserID();
-                usersDb.child(oppositeUserSex).child(userId).child("connections").child("nope").child(currentUID).setValue(true);
+                usersDb.child(userId).child("connections").child("nope").child(currentUID).setValue(true);
 
                 Toast.makeText(getApplicationContext(), "Dislike!!", Toast.LENGTH_SHORT).show();
             }
@@ -138,7 +151,7 @@ public class MainActivity extends Activity {
 
                 cards obj = (cards) dataObject;
                 String userId = obj.getUserID();
-                usersDb.child(oppositeUserSex).child(userId).child("connections").child("yep").child(currentUID).setValue(true);
+                usersDb.child(userId).child("connections").child("yep").child(currentUID).setValue(true);
 
                 //カードに出ているユーザーのIDを引き渡す。
                 isConnectionMatch(userId);
@@ -173,7 +186,7 @@ public class MainActivity extends Activity {
     private void isConnectionMatch(final String userId) {
 
         //カードに出ているユーザーが、ログインしているユーザーのことをlikeしていたら、「yep」の配下に存在する。
-        DatabaseReference currentUserConectionsDb = usersDb.child(userSex).child(currentUID).child("connections").child("yep").child(userId);
+        DatabaseReference currentUserConectionsDb = usersDb.child(currentUID).child("connections").child("yep").child(userId);
         currentUserConectionsDb.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -181,10 +194,10 @@ public class MainActivity extends Activity {
                 if (dataSnapshot.exists()) {
 
                     //dataSnapshot.getKey()でカードに出ている人のユーザーIDを取得。その配下にconnectionsとmatchesを作成する。
-                    usersDb.child(oppositeUserSex).child(dataSnapshot.getKey()).child("connections").child("matches").child(currentUID).setValue(true);
+                    usersDb.child(dataSnapshot.getKey()).child("connections").child("matches").child(currentUID).setValue(true);
 
                     //こっちは、自分のところにマッチした人を格納する。dataSnapshot.getKey()はカードに出ている人のユーザーID
-                    usersDb.child(userSex).child(currentUID).child("connections").child("matches").child(dataSnapshot.getKey()).setValue(true);
+                    usersDb.child(currentUID).child("connections").child("matches").child(dataSnapshot.getKey()).setValue(true);
 
                     Toast.makeText(getApplicationContext(), "New Conections", Toast.LENGTH_SHORT).show();
 
@@ -205,65 +218,43 @@ public class MainActivity extends Activity {
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        DatabaseReference maleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("male");
-        maleDb.addChildEventListener(new ChildEventListener() {
+        DatabaseReference userDb = usersDb.child(user.getUid());
+
+        userDb.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+            //今ログインしているユーザーの性別の逆の性別をoppositeUserSexに格納する
+
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.getKey().equals(user.getUid())) {
+                if (dataSnapshot.exists()) {
 
-                    userSex = "male";
-                    oppositeUserSex = "female";
-                    getOppositeSexUsers();
+                    if (dataSnapshot.child("sex") != null) {
 
+                        userSex = dataSnapshot.child("sex").getValue().toString();
+
+                        switch (userSex) {
+
+                            case "female":
+                                oppositeUserSex = "male";
+                                break;
+
+                            case "male":
+                                oppositeUserSex = "female";
+                                break;
+                        }
+
+                        //その上でログインしているユーザーの性別の逆の性別のユーザーをカード(リスト)に格納する
+                        getOppositeSexUsers();
+                    }
                 }
-            }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-            }
-        });
 
-        DatabaseReference femaleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("female");
-        femaleDb.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                if (dataSnapshot.getKey().equals(user.getUid())) {
-
-                    userSex = "female";
-                    oppositeUserSex = "male";
-                    getOppositeSexUsers();
-
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
             }
         });
 
@@ -272,26 +263,26 @@ public class MainActivity extends Activity {
     public void getOppositeSexUsers() {
 
         //ログインしたユーザーの性別の逆を取得する。
-        DatabaseReference oppositeSexDb = FirebaseDatabase.getInstance().getReference().child("Users").child(oppositeUserSex);
-        oppositeSexDb.addChildEventListener(new ChildEventListener() {
+
+        usersDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 //dataが存在した場合かつ、すでにyepかnopeで、振り分けられてない場合に発動。
-                if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("yep").hasChild(currentUID) && !dataSnapshot.child("connections").child("nope").hasChild(currentUID)) {
+                if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("yep").hasChild(currentUID) && !dataSnapshot.child("connections").child("nope").hasChild(currentUID) && dataSnapshot.child("sex").getValue().equals(oppositeUserSex)) {
 
                     //基本はデフォルトを入れとく
                     String profileImageUrl = "default";
 
                     //もし、プロフィールイメージURLがデフォルトじゃなかったら、画像のURLを取得して格納する。
-                    if(!dataSnapshot.child("profileImageUrl").getValue().equals("default")){
+                    if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
 
                         profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
 
                     }
 
                     //ここで、DBから情報を引っ張ってきてる.ユーザID,名前、プロフィール画像のURLを引き渡してる
-                    cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(),profileImageUrl);
+                    cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl);
 
                     rowItems.add(item);
                     arrayAdapter.notifyDataSetChanged();

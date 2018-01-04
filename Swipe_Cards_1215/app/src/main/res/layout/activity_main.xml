@@ -8,28 +8,36 @@
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/frame"
-        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         app:rotation_degrees="15.5"
         tools:context=".MyActivity" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="logout"/>
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="setting"/>
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="logout" />
+
+        <Button
+            android:id="@+id/matches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="matches" />
+
+
+        <Button
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="setting" />
 
     </LinearLayout>
 

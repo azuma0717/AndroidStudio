@@ -39,9 +39,9 @@ public class SettingActivity extends AppCompatActivity {
     private ImageView mProfileImage;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mCustomerDatabese;
+    private DatabaseReference mUserDatabese;
 
-    private String userId, name, phone, profileImageUrl;
+    private String userId, name, phone, profileImageUrl,userSex;
     private Uri resultUri;
 
 
@@ -49,9 +49,6 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
-        //ログインしているユーザーの性別を一緒にIntentしてくる
-        String userSex = getIntent().getExtras().getString("userSex");
 
         mNameField = findViewById(R.id.name);
         mPhoneField = findViewById(R.id.phone);
@@ -61,7 +58,7 @@ public class SettingActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
-        mCustomerDatabese = FirebaseDatabase.getInstance().getReference().child("Users").child(userSex).child(userId);
+        mUserDatabese = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
 
         //このページに飛んで来た時に、既にデータがDBに格納されていたら、デフォルトで表示しておく
         getUserInfo();
@@ -99,7 +96,7 @@ public class SettingActivity extends AppCompatActivity {
     private void getUserInfo() {
 
         //ログインしているユーザー情報を取得する
-        mCustomerDatabese.addListenerForSingleValueEvent(new ValueEventListener() {
+        mUserDatabese.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -112,6 +109,12 @@ public class SettingActivity extends AppCompatActivity {
                     if (map.get("name") != null) {
                         name = map.get("name").toString();
                         mNameField.setText(name);
+
+                    }
+
+                    if (map.get("sex") != null) {
+                        userSex = map.get("sex").toString();
+
 
                     }
 
@@ -167,7 +170,7 @@ public class SettingActivity extends AppCompatActivity {
         Map userInfo = new HashMap();
         userInfo.put("name", name);
         userInfo.put("phone", phone);
-        mCustomerDatabese.updateChildren(userInfo);
+        mUserDatabese.updateChildren(userInfo);
 
         if (resultUri != null) {
 
@@ -205,7 +208,7 @@ public class SettingActivity extends AppCompatActivity {
                     //ダウンロードURLをゲットしたら、DBに格納する
                     Map userInfo = new HashMap();
                     userInfo.put("profileImageUrl", downloadUrl.toString());
-                    mCustomerDatabese.updateChildren(userInfo);
+                    mUserDatabese.updateChildren(userInfo);
 
                     finish();
                     return;

@@ -1,4 +1,4 @@
-package com.gmail.yuki.swipe_cards_1215;
+package com.gmail.yuki.swipe_cards_1215.Cards;
 
 /**
  * Created by yuki on 2017/12/21.
