@@ -50,7 +50,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolders> {
 
 
 
-            Glide.with(context).load(chatObject.getProfileImageUrl()).into(holder.mChatImage);
+//            Glide.with(context).load(chatObject.getProfileImageUrl()).into(holder.mChatImage);
             holder.mMessage.setGravity(Gravity.END);
             holder.mMessage.setTextColor(Color.parseColor("#404040"));
             holder.mContainer.setBackgroundColor(Color.parseColor("#F4F4F4"));
